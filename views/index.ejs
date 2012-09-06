@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=1024, user-scalable=no">
+
+	<title>OSC 2012 Shimane Presentation</title>
+	
+	<!-- Required stylesheet -->
+	<link rel="stylesheet" href="/stylesheets/deck.core.css">
+	<link rel="stylesheet" href="/stylesheets/style.css">
+	
+	<!-- Extension CSS files go here. Remove or add as needed. -->
+	<link rel="stylesheet" href="/extensions/goto/deck.goto.css">
+	<link rel="stylesheet" href="/extensions/menu/deck.menu.css">
+	<link rel="stylesheet" href="/extensions/navigation/deck.navigation.css">
+	<link rel="stylesheet" href="/extensions/status/deck.status.css">
+	<link rel="stylesheet" href="/extensions/hash/deck.hash.css">
+	<link rel="stylesheet" href="/extensions/scale/deck.scale.css">
+
+	<!-- Style theme. More available in /themes/style/ or create your own. -->
+	<link rel="stylesheet" href="themes/style/swiss.css">
+	
+	<!-- Transition theme. More available in /themes/transition/ or create your own. -->
+	<link rel="stylesheet" href="/themes/transition/horizontal-slide.css">
+	
+	<!-- Required Modernizr file -->
+	<script src="/javascripts/modernizr.custom.js"></script>
+</head>
+<body class="deck-container">
+
+<!-- Begin slides. Just make elements with a class of slide. -->
+
+<section class="slide">
+	<h1>http://ishikura.osc2012.jit.su</h1>
+</section>
+
+<section class="slide">
+	<h1>Node.js+Socket.IO を例に、リアルタイムWebについて考えてみる</h1>
+</section>
+
+<section class="slide">
+	<h2>自己紹介</h2>
+	<h3>石倉 淳一 - MINIMAL ENGINEERING</h3>
+	<ul>
+		<li>
+			<h3>Web : http://mnmleng.com</h3>
+		</li>
+		<li>
+			<h3>twitter : @chilichi1115</h3>
+		</li>
+		<li>
+			<h3>Facebook : https://www.facebook.com/mnmleng</h3>
+		</li>
+		<li>
+			<h3>主な活動内容</h3>
+			<ul>
+				<li><strong>HTML5 + CSS3 + JS</strong></li>
+				<li><strong>Objective-C (iOS)</strong></li>
+				<li><strong>Web design</strong></li>
+				<li><strong>Interactive, UI/UX design</strong></li>
+				<li><strong>酒</strong></li>
+			</ul>
+		</li>
+	</ul>
+</section>
+
+<section class="slide">
+	<h2>今日のお話</h2>
+	<h3>リアルタイムな体験をよりよくするコンテンツやビジュアルとはどういうものか</h3>
+	<ul>
+		<li><strong>キーとなるものは？</strong></li>
+		<li><strong>技術的な話はたくさんされているが、その辺の話はあまり見ない</strong></li>
+	</ul>	
+	<img class="camera middle" name="camera"/>
+</section>
+
+<section class="slide">
+	<h1>Node.jsとSocket.IO</h1>
+</section>
+
+<section class="slide">
+	<h2>Node.jsとSocket.IO</h2>
+	<h3>Node.js</h3>
+	<ul>
+		<li><strong>シングルスレッド + イベントループ</strong></li>
+		<li><strong>ノンブロッキングI/O</strong></li>
+	</ul>	
+	<p><strong>を特徴としたJavascript実行環境</strong></p>
+	<h3>Socket.IO</h3>
+	<ul>
+		<li><strong>WebSocket</strong></li>
+		<li><strong>他にも様々な通信手段をサポート</strong></li>
+		<li><strong>様々なデバイス、ブラウザをサポート</strong></li>
+	</ul>	
+	<img class="camera top" name="camera"/>
+</section>
+
+<section class="slide">
+	<h1>リアルタイムWebな体験</h1>
+</section>
+
+<section class="slide">
+	<h2>リアルタイムWebな体験</h2>
+	<ul>
+		<li><strong>これまでのWebは静的なリクエスト／レスポンスが基本パターン</strong></li>
+		<li><strong>これからは永続的で双方向な接続も可能</strong></li>
+		<li><strong>今までと全く違った体験を実現できる可能性</strong></li>
+	</ul>	
+	<h3>ではリアルタイムに「何」を「どのように」共有するのか？</h3>
+	<img class="camera middle" name="camera"/>
+</section>
+
+<section class="slide">
+	<h1>感情 Emotion</h1>
+</section>
+
+<section class="slide">
+	<h2>感情を共有する</h2>
+	<h3>「どのように」共有する？</h3>
+	<ul>
+		<li><strong>表情</strong></li>
+		<li><strong>音声</strong></li>
+		<li><strong>ジェスチャー</strong></li>
+		<li><strong>物理法則</strong></li>
+		<li><strong>etc</strong></li>
+	</ul>	
+	<p><strong>感情を伝えるあらゆる要素／表現を使って共有する</strong></p>
+	<img class="camera top" name="camera"/>
+</section>
+
+<section id="fontbomb" class="slide">
+	<h2>バグを爆破しましょう</h2>
+	<div>
+
+<pre class="left">
+<code>
+// Module dependencies.<br>
+var express = require('express')<br>
+  , routes = require('./routes')<br>
+  , <span class="bug">bug</span>http = require('http')<br>
+  , path = require('path');<br>
+<br>
+var app = express();<br>
+<br>
+app.<span class="bug">bug</span>configure(function(){<br>
+  app.set('port', process.env.PORT || 3000);<br>
+  app.set('views', __dirname + '/views');<br>
+  app.set('view engine', 'ejs');<br>
+  app.use<span class="bug">bug</span>(express.favicon());<br>
+  app.use(express.logger('dev'));<br>
+  app.use(express.bodyParser());<br>
+  app.use(express.methodOve<span class="bug">bug</span>rride());<br>
+  app.use(app.router);<br>
+  app.use(express.static(path.join(__dirname, 'public')));<br>
+});<br>
+<br>
+app.configure(<span class="bug">bug</span>'development', function(){<br>
+  app.use(express.errorHandler());<br>
+});<br>
+<br>
+app.get('/', routes.index);<br>
+<br>
+http.createServer(<span class="bug">bug</span>app).listen(app.<span class="bug">bug</span>get('port'), function(){<br>
+  console.log("Express server listening on port " + app.get('port'));<br>
+});<br>
+</code>
+</pre>
+
+
+<pre class="right">
+<code>
+&lt;!DOCTYPE html&gt;<span class="bug">bug</span><br>
+&lt;html&gt;<br>
+  &lt;head&gt;<br>
+    &lt;title&gt;&lt;br&gt;&lt;%= title %&gt;&lt;/title&gt;<br>
+    &lt;link rel='stylesheet' href='/stylesheets/style.css' /&gt;<br>
+  &lt;/head&gt;<span class="bug">bug</span><br>
+  &lt;body&gt;<br>
+    &lt;h1&gt;&lt;%= title %&gt;&lt;/h1&gt;<br>
+    &lt;p<span class="bug">bug</span>&gt;Welcome to &lt;%= title %&gt;&lt;/p&gt;<br>
+<!--
+    &lt;section class=&quot;slide&quot;&gt;<br>
+      &lt;h2&gt;How to Make a Deck&lt;/h2&gt;<br>
+      &lt;ol&gt;<br>
+        &lt;li&gt;<br>
+          &lt;h3&gt;Write Slides&lt;/h3&gt;<br>
+          &lt;p&gt;Slide content is simple HTML.&lt;/p&gt;<br>
+        &lt;/li&gt;<br>
+        &lt;li&gt;<br>
+          &lt;h3&gt;Choose<span class="bug">bug</span> Themes&lt;/h3&gt;<br>
+          &lt;p&gt;One for slide styles and one for deck transitions.&lt;/p&gt;<br>
+        &lt;/li&gt;<br>
+        &hellip;<br>
+      &lt;/ol&gt;<br>
+    &lt;/section&gt;<br>
+-->     
+  &lt;/body&gt;<br>
+&lt;/html&gt;<br>
+
+</code>
+</pre>	
+
+
+	</div>
+</section>
+
+<section class="slide">
+	<h2>まとめ</h2>
+	<h3>リアルタイムWebが活きるコンテンツ／ビジュアルについての議論や検討をもっとしたい</h3>
+	<ul>
+		<li><strong>「感情」がキーワードの一つではないか？</strong></li>
+	</ul>	
+	<h3>B to B のプロダクトやサービスにこそ、リアルタイムWebの真価を発揮するべき</h3>
+	<ul>
+		<li><strong>遠隔で、より建設的なコミュニケーションや共同作業を行うシーンが多い</strong></li>
+	</ul>	
+</section>
+
+<section class="slide">
+	<h1>ご清聴ありがとうございました</h1>
+</section>
+
+<!-- End slides. -->
+
+
+<!-- Begin extension snippets. Add or remove as needed. -->
+
+<!-- deck.navigation snippet -->
+<a href="#" class="deck-prev-link" title="Previous">&#8592;</a>
+<a href="#" class="deck-next-link" title="Next">&#8594;</a>
+
+<!-- deck.status snippet -->
+<p class="deck-status">
+	<span class="deck-status-current"></span>
+	/
+	<span class="deck-status-total"></span>
+  	<span class="deck-status-viewer">(0)</span>
+</p>
+
+<!-- deck.goto snippet -->
+<form action="." method="get" class="goto-form">
+	<label for="goto-slide">Go to slide:</label>
+	<input type="text" name="slidenum" id="goto-slide" list="goto-datalist">
+	<datalist id="goto-datalist"></datalist>
+	<input type="submit" value="Go">
+</form>
+
+<!-- deck.hash snippet -->
+<a href="." title="Permalink to this slide" class="deck-permalink">#</a>
+
+ 
+<!-- End extension snippets. -->
+
+
+<!-- Required JS files. -->
+<script src="/javascripts/jquery-1.7.2.min.js"></script>
+<script src="/javascripts/deck.core.js"></script>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/javascripts/client.js"></script>
+
+<!-- Extension JS files. Add or remove as needed. -->
+<script src="/javascripts/deck.core.js"></script>
+<script src="/extensions/goto/deck.goto.js"></script>
+<script src="/extensions/status/deck.status.js"></script>
+<script src="/extensions/navigation/deck.navigation.js"></script>
+<script src="/extensions/hash/deck.hash.js"></script>
+<!-- 
+<script src="/extensions/scale/deck.scale.js"></script>
+<script src="/extensions/menu/deck.menu.js"></script>
+-->
+
+<script src="/javascripts/keyboard.0.2.2.min.js"></script>
+<script src="/javascripts/fontbomb.js"></script>
+
+<!-- Initialize the deck. You can put this in an external file if desired. -->
+<script>
+	$(function() {
+		$.deck('.slide');
+	});	
+</script>
+</body>
+</html>

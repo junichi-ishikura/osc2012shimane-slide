@@ -1,0 +1,20 @@
+{
+  "name": "osc2012shimane_slide",
+  "version": "0.0.1-4",
+  "private": true,
+  "scripts": {
+    "start": "server.js"
+  },
+  "dependencies": {
+    "express": "3.0.0rc3",
+    "ejs": "*",
+    "socket.io": "0.9.10",
+    "redis": "0.7.2",
+    "connect-redis": "1.4.1",
+    "cookie": "0.0.4"
+  },
+  "engines": {
+    "node": "v0.8.6"
+  },
+  "subdomain": "ishikura.osc2012"
+}
